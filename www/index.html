@@ -69,14 +69,17 @@
 			$(document).ready(function(){
 				var watchID = null;
 				$('#get').click(function(){
+					alert('11');
 					navigator.geolocation.getCurrentPosition(onSuccess, onError);
 				});
 				$('#watch').click(function(){
+					alert('22');
 					var options = {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
 					watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
 
 				});
 				$('#stop').click(function(){
+					alert('33');
 					if (watchID != null) {
 						navigator.geolocation.clearWatch(watchID);
 						watchID = null;
@@ -95,7 +98,7 @@
 				$('#other').val('Altitude: '+ position.coords.altitude+ 
 								'  Accuracy: '+ position.coords.accuracy+
 								'  Heading: '+position.coords.heading+
-								'  Speed: '+position.coords.speed
+								'  Speed: '+position.coords.speed+
 								'  Timestamp: '+position.timestamp);
 			}
         </script>
