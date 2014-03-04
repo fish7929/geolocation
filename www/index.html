@@ -90,9 +90,7 @@
 				});
 				$('#clear').click(function(){
 					//alert('44');
-					$('#longitude').val('');
-					$('#latitude').val('');
-					$('#other').val('');
+					clear();
 				});
 			});
 			function onError(error) {
@@ -101,6 +99,7 @@
 			}
 			
 			function onSuccess(position) {
+				clear();
 				$('#longitude').val(position.coords.longitude);
 				$('#latitude').val(position.coords.latitude);
 				$('#other').val('Altitude: '+ position.coords.altitude+ '\n'+
@@ -109,6 +108,11 @@
 								'Speed: '+position.coords.speed+'\n'+
 								'Timestamp: '+position.timestamp+'\n'+
 								'LocalTime: '+ new Date(position.timestamp).toLocaleString());
+			}
+			function clear(){
+				$('#longitude').val('');
+				$('#latitude').val('');
+				$('#other').val('');
 			}
         </script>
     </body>
