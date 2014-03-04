@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <!--
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        -->
+		<link rel="stylesheet" type="text/css" href="css/icons.css" />
+        <link rel="stylesheet" type="text/css" href="css/af.ui.css" title="default"/>
+		<style type="text/css">
+			#afui .mystyle{
+				clear:both;
+				width:55px;
+				text-align:center;
+			}
+		</style>
+        <title>My Loction</title>
+    </head> 
+    <body>
+        <div id="afui">
+			<div id="content">
+				<div id="main" class="panel" selected="true" data-footer="custom_footer" data-header="custom_header">
+					<button id="get" class="icon location big">获取当前位置</button>
+					<button id="watch" class="icon clock big">检测位置</button>
+					<button id="stop" class="icon close big">停止检测</button><br>
+					<label class="mystyle" for="longitude">经度：</label>
+					<input type="text" disabled="disabled" id="longitude" name="longitude" />
+					<label class="mystyle" for="latitude">纬度：</label>
+					<input type="text" disabled="disabled" id="latitude" name="latitude"/>
+					<label class="mystyle" for="other">其他：</label>
+					<input type="text" disabled="disabled" id="other" name="other"/>
+				</div>
+			</div>
+			<header id="custom_header">
+				<h1>定位系统</h1>
+				<a href="#" class="button"  style="float:right;" class="icon home"></a>
+			</header>
+			<footer id="custom_footer">
+				<a href="#" class="icon info">关于</a>
+			</footer>
+        </div>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+		<!--
+        <script type="text/javascript" charset="utf-8" src="js/jquery-1.10.2.min.js"></script>
+		-->
+        <script type="text/javascript" charset="utf-8" src="js/appframework.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="ui/appframework.ui.min.js"></script>
+        <script type="text/javascript">
+			$(document).ready(function(){
+				var watchID = null;
+				$('#get').click(function(){
+					navigator.geolocation.getCurrentPosition(onSuccess, onError);
+				});
+				$('#watch').click(function(){
+					var options = {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
+					watchID = navigator.geolocation.watchPosition(onSuccess, onError, options);
+
+				});
+				$('#stop').click(function(){
+					if (watchID != null) {
+						navigator.geolocation.clearWatch(watchID);
+						watchID = null;
+					}
+
+				});
+			});
+			function onError(error) {
+				alert('code: '    + error.code    + '\n' +
+					  'message: ' + error.message + '\n');
+			}
+			
+			function onSuccess(position) {
+				$('#longitude').val(position.coords.longitude);
+				$('#latitude').val(position.coords.latitude);
+				$('#other').val('Altitude: '+ position.coords.altitude+ 
+								'  Accuracy: '+ position.coords.accuracy+
+								'  Heading: '+position.coords.heading+
+								'  Speed: '+position.coords.speed
+								'  Timestamp: '+position.timestamp);
+			}
+        </script>
+    </body>
+</html>
