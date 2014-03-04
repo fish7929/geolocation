@@ -40,15 +40,16 @@
         <div id="afui">
 			<div id="content">
 				<div id="main" class="panel" selected="true" data-footer="custom_footer" data-header="custom_header">
-					<button id="get" class="icon location big">获取当前位置</button>
-					<button id="watch" class="icon clock big">检测位置</button>
-					<button id="stop" class="icon close big">停止检测</button><br>
+					<button id="get" class="icon location big">获取</button>
+					<button id="watch" class="icon clock big">监视坐标</button>
+					<button id="stop" class="icon close big">停止监视</button>
+					<button id="clear" class="icon trash big">清除</button><br>
 					<label class="mystyle" for="longitude">经度：</label>
 					<input type="text" disabled="disabled" id="longitude" name="longitude" />
 					<label class="mystyle" for="latitude">纬度：</label>
 					<input type="text" disabled="disabled" id="latitude" name="latitude"/>
 					<label class="mystyle" for="other">其他：</label>
-					<input type="text" disabled="disabled" id="other" name="other"/>
+					<textarea id="other"name="other" cols ="20" rows = "5" disabled="disabled"></textarea>
 				</div>
 			</div>
 			<header id="custom_header">
@@ -86,6 +87,12 @@
 					}
 
 				});
+				$('#clear').click(function(){
+					alert('44');
+					$('#longitude').val('');
+					$('#latitude').val('');
+					$('#other').val('');
+				});
 			});
 			function onError(error) {
 				alert('code: '    + error.code    + '\n' +
@@ -95,11 +102,11 @@
 			function onSuccess(position) {
 				$('#longitude').val(position.coords.longitude);
 				$('#latitude').val(position.coords.latitude);
-				$('#other').val('Altitude: '+ position.coords.altitude+ 
-								'  Accuracy: '+ position.coords.accuracy+
-								'  Heading: '+position.coords.heading+
-								'  Speed: '+position.coords.speed+
-								'  Timestamp: '+position.timestamp);
+				$('#other').val('Altitude: '+ position.coords.altitude+ '\n'+
+								'Accuracy: '+ position.coords.accuracy+'\n'+
+								'Heading: '+position.coords.heading+'\n'+
+								'Speed: '+position.coords.speed+'\n'+
+								'Timestamp: '+position.timestamp);
 			}
         </script>
     </body>
